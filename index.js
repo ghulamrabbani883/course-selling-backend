@@ -11,7 +11,10 @@ const app = express();
 const PORT = process.env.PORT
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: '*',
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
