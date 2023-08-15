@@ -45,13 +45,14 @@ const adminLogin = async (req, res) => {
     });
   }
 };
+
 const createCourse = async (req, res) => {
   console.log(req.body)
   const { title, description, price, imagelink, published } = req.body;
   if(!title || !description || !price || !imagelink){
     return res.json({success:false, msg:'Please provide all the data'})
   }
-
+  
   const result = await pool.query(
     "insert into course(title, description,price,imagelink,published) values($1,$2,$3,$4,$5) returning *",
     [title, description, price, imagelink, published]

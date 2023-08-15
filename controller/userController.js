@@ -88,12 +88,11 @@ const purchaseCourse = async (req, res) => {
   return res.json({ purchasedCourse: purchased.rows[0] });
 };
 const getPurchasedCourse = async (req, res) => {
-  const { id } = req.body;
+  const { publicid } = req.body;
   const courseIds = await pool.query(
-    "select courseId from public where publicId = $1",
-    [id]
+    "select courseId from public where id = $1",
+    [publicid]
   );
-  console.log(courseIds)
 
   const purchasedCourses = await pool.query(
     "select * from course where courseId = ANY($1::int[])",

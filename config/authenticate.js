@@ -13,7 +13,7 @@ const userAuthenticate = async (req, res, next) => {
   if (token) {
     const verify = await jwt.verify(token, process.env.SECRET_KEY);
     const result = await pool.query(
-      "select * from public where publicId = $1",
+      "select * from public where id = $1",
       [verify.id]
     );
     return next();
@@ -24,12 +24,13 @@ const userAuthenticate = async (req, res, next) => {
     msg: "Please login to access the resource",
   });
 };
+
 const adminAuthenticate = async (req, res, next) => {
   const token = req.headers.bearertoken;
   if (token) {
     const verify = await jwt.verify(token, process.env.SECRET_KEY);
     const result = await pool.query(
-      "select * from public where publicId = $1",
+      "select * from public where id = $1",
       [verify.id]
     );
     const admin = result.rows[0].isadmin;
@@ -46,5 +47,6 @@ const adminAuthenticate = async (req, res, next) => {
     msg: "Please login to access the resource",
   });
 };
+
 
 module.exports = { generateToken, userAuthenticate, adminAuthenticate };
